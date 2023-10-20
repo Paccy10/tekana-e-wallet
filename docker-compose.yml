@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: tekana_postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:${POSTGRES_PORT}
+    networks: ['tekana_e_wallet']
+
+  api:
+    build:
+      context: .
+    container_name: tekana_api
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    depends_on:
+      - postgres
+    networks: ['tekana_e_wallet']
+
+volumes:
+  postgres_data:
+
+networks:
+  tekana_e_wallet:
+    name: tekana_e_wallet
