@@ -1,10 +1,23 @@
-import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Req,
+} from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from './auth.service';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ResponseMessage } from 'src/common/decorators';
-import { USER_REGISTERED, USER_VERIFIED } from './constants/messages';
-import { RegisterUserDTO } from './dto';
+import {
+  AUTHENTICATED,
+  USER_REGISTERED,
+  USER_VERIFIED,
+} from './constants/messages';
+import { LoginDTO, RegisterUserDTO } from './dto';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -23,5 +36,13 @@ export class AuthController {
   @ResponseMessage(USER_VERIFIED)
   verifyUser(@Param('token') token: string) {
     return this.authService.verifyUser(token);
+  }
+
+  @Post('login')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'User login' })
+  @ResponseMessage(AUTHENTICATED)
+  login(@Body() loginDTO: LoginDTO) {
+    return this.authService.loginUser(loginDTO);
   }
 }
