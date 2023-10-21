@@ -6,7 +6,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { JwtAuthGuard } from 'src/auth/guards';
 import { UserService } from './user.service';
@@ -18,6 +18,7 @@ import { UserSerializer } from './user.serializer';
 @Controller('users')
 @ApiTags('Users')
 @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class UserController {
   constructor(private userService: UserService) {}
 
