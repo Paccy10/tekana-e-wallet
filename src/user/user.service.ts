@@ -3,16 +3,19 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { User } from './user.entity';
-import { USER_NOT_FOUND } from './constants/messages';
+import { NO_WALLET, USER_NOT_FOUND } from './constants/messages';
 import { FilterDTO } from 'src/common/dto';
 import { FilterResponse } from 'src/common/interfaces';
 import { UserSerializer } from './user.serializer';
 import { FilterService } from 'src/common/services';
+import { WalletSerializer } from 'src/wallet/serializers';
+import { Wallet } from 'src/wallet/wallet.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(Wallet) private walletRepository: Repository<Wallet>,
   ) {}
 
   async getUserById(id: string): Promise<User> {
@@ -39,5 +42,19 @@ export class UserService {
     ];
 
     return listFilterService.filter({ filters, searchFields });
+  }
+
+  async getUserWallet(id: string): Promise<WalletSerializer> {
+    const user = await this.getUserById(id);
+    const wallet = await this.walletRepository.findOne({
+      where: { user: { pkid: user.pkid } },
+      relations: ['user'],
+    });
+
+    if (!wallet) {
+      throw new NotFoundException(NO_WALLET);
+    }
+
+    return new WalletSerializer(wallet);
   }
 }
