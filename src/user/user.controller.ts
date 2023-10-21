@@ -14,6 +14,7 @@ import { ResponseMessage } from 'src/common/decorators';
 import { FilterDTO } from 'src/common/dto';
 import { USERS_FETCHED, USER_FETCHED } from './constants/messages';
 import { UserSerializer } from './user.serializer';
+import { WALLET_FETCHED } from 'src/wallet/constants';
 
 @Controller('users')
 @ApiTags('Users')
@@ -35,5 +36,14 @@ export class UserController {
   async getUser(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     const user = await this.userService.getUserById(id);
     return new UserSerializer(user);
+  }
+
+  @Get(':id/wallet')
+  @ApiOperation({ summary: 'Get user wallet' })
+  @ResponseMessage(WALLET_FETCHED)
+  async getUserWallet(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+  ) {
+    return this.userService.getUserWallet(id);
   }
 }
