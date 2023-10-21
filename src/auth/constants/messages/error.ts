@@ -3,3 +3,7 @@ export const WEAK_PASSWORD =
 export const EMAIL_EXISTS = 'User with the given email already exists';
 export const PHONE_EXISTS = 'User with the given phone already exists';
 export const INVALID_TOKEN = 'Invalid token';
+export const INVALID_CREDENTIALS = 'Invalid credentials';
+export const DEACTIVATED_USER =
+  'User account is not activated. Please check your email inbox and verify your email';
+export const UNAUTHENTICATED = 'User is not authenticated';

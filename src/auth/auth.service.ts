@@ -2,6 +2,7 @@ import {
   BadRequestException,
   ConflictException,
   Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -10,10 +11,12 @@ import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
 
 import { User } from 'src/user/user.entity';
-import { RegisterUserDTO } from './dto';
+import { LoginDTO, RegisterUserDTO } from './dto';
 import { UserSerializer } from 'src/user/user.serializer';
 import {
+  DEACTIVATED_USER,
   EMAIL_EXISTS,
+  INVALID_CREDENTIALS,
   INVALID_TOKEN,
   PHONE_EXISTS,
 } from './constants/messages';
@@ -100,5 +103,30 @@ export class AuthService {
     const savedUser = await this.userRepository.save(user);
 
     return new UserSerializer(savedUser);
+  }
+
+  async loginUser(
+    loginDTO: LoginDTO,
+  ): Promise<{ token: string; user: UserSerializer }> {
+    const { email, password } = loginDTO;
+    const user = await this.userRepository.findOne({
+      where: { email },
+    });
+
+    if (!user || (user && !bcrypt.compareSync(password, user.password))) {
+      throw new UnauthorizedException(INVALID_CREDENTIALS);
+    }
+
+    if (user && !user.active) {
+      throw new UnauthorizedException(DEACTIVATED_USER);
+    }
+
+    const payload: JwtPayload = { id: user.id, email: user.email };
+    const token = await this.jwtService.sign(payload);
+
+    return {
+      token,
+      user: new UserSerializer(user),
+    };
   }
 }
