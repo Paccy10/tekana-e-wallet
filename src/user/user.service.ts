@@ -4,6 +4,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { User } from './user.entity';
 import { USER_NOT_FOUND } from './constants/messages';
+import { FilterDTO } from 'src/common/dto';
+import { FilterResponse } from 'src/common/interfaces';
+import { UserSerializer } from './user.serializer';
+import { FilterService } from 'src/common/services';
 
 @Injectable()
 export class UserService {
@@ -19,5 +23,21 @@ export class UserService {
       throw new NotFoundException(USER_NOT_FOUND);
     }
     return user;
+  }
+
+  async getUsers(filters: FilterDTO): Promise<FilterResponse<UserSerializer>> {
+    const listFilterService = new FilterService(
+      this.userRepository,
+      UserSerializer,
+    );
+    const searchFields = [
+      'firstname',
+      'lastname',
+      'middlename',
+      'email',
+      'phone',
+    ];
+
+    return listFilterService.filter({ filters, searchFields });
   }
 }
