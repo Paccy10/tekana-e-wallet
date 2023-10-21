@@ -1,2 +1,3 @@
 export const USER_REGISTERED =
   'User registered successfully! Please check your email inbox to activate your account';
+export const USER_VERIFIED = 'User verified successfully';

@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
@@ -8,11 +12,16 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/user/user.entity';
 import { RegisterUserDTO } from './dto';
 import { UserSerializer } from 'src/user/user.serializer';
-import { EMAIL_EXISTS, PHONE_EXISTS } from './constants/messages';
+import {
+  EMAIL_EXISTS,
+  INVALID_TOKEN,
+  PHONE_EXISTS,
+} from './constants/messages';
 import { Mail } from 'src/common/interfaces';
 import { JwtPayload } from './interfaces';
 import { EmailService } from 'src/common/services';
 import { VERIFICATION_EMAIL_JOB } from 'src/common/constants';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -20,6 +29,7 @@ export class AuthService {
     @InjectRepository(User) private userRepository: Repository<User>,
     private jwtService: JwtService,
     private emailService: EmailService,
+    private userService: UserService,
   ) {}
 
   private async doesUserExists(registerUserDTO: RegisterUserDTO) {
@@ -38,6 +48,15 @@ export class AuthService {
 
     if (user) {
       throw new ConflictException(PHONE_EXISTS);
+    }
+  }
+
+  private async decodeToken(token: string): Promise<JwtPayload> {
+    try {
+      const payload: JwtPayload = await this.jwtService.verifyAsync(token);
+      return payload;
+    } catch (error) {
+      throw new BadRequestException(INVALID_TOKEN);
     }
   }
 
@@ -72,5 +91,14 @@ export class AuthService {
     await this.emailService.sendEmail(emailData, VERIFICATION_EMAIL_JOB);
 
     return new UserSerializer(user);
+  }
+
+  async verifyUser(token: string): Promise<UserSerializer> {
+    const payload = await this.decodeToken(token);
+    const user = await this.userService.getUserById(payload.id);
+    user.active = true;
+    const savedUser = await this.userRepository.save(user);
+
+    return new UserSerializer(savedUser);
   }
 }
