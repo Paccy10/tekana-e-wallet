@@ -8,8 +8,7 @@ import { FilterDTO } from 'src/common/dto';
 import { FilterResponse } from 'src/common/interfaces';
 import { UserSerializer } from './user.serializer';
 import { FilterService } from 'src/common/services';
-import { WalletSerializer } from 'src/wallet/serializers';
-import { Wallet } from 'src/wallet/wallet.entity';
+import { Wallet } from 'src/wallet/entities/wallet.entity';
 
 @Injectable()
 export class UserService {
@@ -44,7 +43,7 @@ export class UserService {
     return listFilterService.filter({ filters, searchFields });
   }
 
-  async getUserWallet(id: string): Promise<WalletSerializer> {
+  async getUserWallet(id: string): Promise<Wallet> {
     const user = await this.getUserById(id);
     const wallet = await this.walletRepository.findOne({
       where: { user: { pkid: user.pkid } },
@@ -55,6 +54,6 @@ export class UserService {
       throw new NotFoundException(NO_WALLET);
     }
 
-    return new WalletSerializer(wallet);
+    return wallet;
   }
 }

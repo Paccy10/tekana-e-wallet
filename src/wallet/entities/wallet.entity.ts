@@ -17,4 +17,7 @@ export class Wallet extends AppBaseEntity {
 
   @Column('boolean', { nullable: false, default: true })
   active: boolean;
+
+  @Column('decimal', { nullable: false, precision: 10, scale: 2, default: 0 })
+  balance: number;
 }
