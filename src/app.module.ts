@@ -6,7 +6,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
 
-import { dbOptions } from './config/db/db.config';
+import { dataSourceOptions } from './config/db/db.config';
 import { CommonModule } from './common/common.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
@@ -15,7 +15,7 @@ import { WalletModule } from './wallet/wallet.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot(dbOptions),
+    TypeOrmModule.forRoot(dataSourceOptions),
 
     // Configure bull module for queues
     BullModule.forRootAsync({
