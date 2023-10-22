@@ -66,3 +66,56 @@ Rebuild from scratch a back-end solution for legacy platform that serves 1 milli
   - Sprint Demos: Do Sprint demos at the end of each sprint to showcase the completed work to stakeholders and gather feedback.
 
 - **Creativity and Innovation**: Encourage the team to think creatively and innovate when solving problems, and continually seek opportunities to improve the solution.
+
+## Running the application
+
+### Requirements
+
+```
+- docker
+- docker compose V3 (If you use V2, use docker-compose when running docker compose commands)
+```
+
+### Installation and Setup
+
+- Clone the repository
+
+```
+git clone https://github.com/Paccy10/tekana-e-wallet.git
+```
+
+- Environment variables
+
+```
+Create a .env file and copy variables from .env.sample to .env and fill them accordingly (Check the submitted document for values)
+```
+
+- Build and run the app
+
+```
+docker compose up --build -d --remove-orphans
+```
+
+- Run the app
+
+```
+docker compose up -d
+```
+
+- Run migrations (This step is very important to start using the app 🚨)
+
+```
+docker compose exec api npm run migration:run
+```
+
+- Stop the app
+
+```
+docker compose down
+```
+
+- Check logs
+
+```
+docker compose logs
+```
