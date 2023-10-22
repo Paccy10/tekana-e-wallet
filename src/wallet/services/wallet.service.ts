@@ -56,7 +56,7 @@ export class WalletService {
       this.walletRepository,
       WalletSerializer,
     );
-    const options = {} as FindManyOptions<User>;
+    const options = {} as FindManyOptions<Wallet>;
     options.relations = ['user'];
 
     return listFilterService.filter({ filters, options });

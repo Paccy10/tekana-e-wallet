@@ -1,11 +1,13 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Param,
   ParseUUIDPipe,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
@@ -13,13 +15,17 @@ import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards';
 import { TransactionService } from '../services';
 import {
+  TRANSACTIONS_FETCHED,
   TRANSACTION_COMPLETED,
   TRANSACTION_CREATED,
+  TRANSACTION_FETCHED,
 } from '../constants/messages';
 import { ResponseMessage } from 'src/common/decorators';
 import { CreateTransactionDTO } from '../dto/create-transaction.dto';
 import { GetUser } from 'src/auth/decorators';
 import { CompleteTransactionDTO } from '../dto/complete-transaction.dto';
+import { FilterDTO } from 'src/common/dto';
+import { TransactionSerializer } from '../serializers';
 
 @Controller('transactions')
 @ApiTags('Transactions')
@@ -55,5 +61,22 @@ export class TransactionController {
       completeTransactionDTO,
       user,
     );
+  }
+
+  @Get('')
+  @ApiOperation({ summary: 'Get transactions' })
+  @ResponseMessage(TRANSACTIONS_FETCHED)
+  async getTransactions(@Query() filterDTO: FilterDTO) {
+    return this.transactionService.getTransactions(filterDTO);
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Get transaction' })
+  @ResponseMessage(TRANSACTION_FETCHED)
+  async getTransaction(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+  ) {
+    const transaction = await this.transactionService.getTransaction(id);
+    return new TransactionSerializer(transaction);
   }
 }
