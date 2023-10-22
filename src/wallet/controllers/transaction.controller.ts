@@ -1,12 +1,25 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
 import { JwtAuthGuard } from 'src/auth/guards';
 import { TransactionService } from '../services';
-import { TRANSACTION_CREATED } from '../constants/messages';
+import {
+  TRANSACTION_COMPLETED,
+  TRANSACTION_CREATED,
+} from '../constants/messages';
 import { ResponseMessage } from 'src/common/decorators';
 import { CreateTransactionDTO } from '../dto/create-transaction.dto';
 import { GetUser } from 'src/auth/decorators';
+import { CompleteTransactionDTO } from '../dto/complete-transaction.dto';
 
 @Controller('transactions')
 @ApiTags('Transactions')
@@ -24,6 +37,22 @@ export class TransactionController {
   ) {
     return this.transactionService.initiateTransaction(
       createTransactionDTO,
+      user,
+    );
+  }
+
+  @Post(':id')
+  @ApiOperation({ summary: 'Complete transaction' })
+  @HttpCode(HttpStatus.OK)
+  @ResponseMessage(TRANSACTION_COMPLETED)
+  async completeTransaction(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+    @Body() completeTransactionDTO: CompleteTransactionDTO,
+    @GetUser() user,
+  ) {
+    return this.transactionService.completeTransaction(
+      id,
+      completeTransactionDTO,
       user,
     );
   }

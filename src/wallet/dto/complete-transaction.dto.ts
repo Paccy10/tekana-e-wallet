@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, Matches } from 'class-validator';
+import { Matches, IsNotEmpty, IsString } from 'class-validator';
 
 import { INVALID_PIN } from '../constants/messages';
 
-export class CreateWalletDTO {
+export class CompleteTransactionDTO {
   @ApiProperty()
   @Matches(/^\d{5}$/, {
     message: INVALID_PIN,
