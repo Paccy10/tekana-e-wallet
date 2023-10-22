@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 
 import { Transaction, Wallet } from '../entities';
@@ -22,6 +22,9 @@ import {
 } from '../constants/messages';
 import { TransactionStatus, TransactionType } from '../constants/enums';
 import { CompleteTransactionDTO } from '../dto/complete-transaction.dto';
+import { FilterDTO } from 'src/common/dto';
+import { FilterService } from 'src/common/services';
+import { FilterResponse } from 'src/common/interfaces';
 
 @Injectable()
 export class TransactionService {
@@ -105,5 +108,19 @@ export class TransactionService {
     const savedTransaction = await this.transactionRepository.save(transaction);
     await this.walletRepository.save(wallet);
     return new TransactionSerializer(savedTransaction);
+  }
+
+  async getTransactions(
+    filters: FilterDTO,
+  ): Promise<FilterResponse<TransactionSerializer>> {
+    const listFilterService = new FilterService(
+      this.transactionRepository,
+      TransactionSerializer,
+    );
+    const options = {} as FindManyOptions<Transaction>;
+    options.relations = ['wallet', 'wallet.user'];
+    const searchFields = ['status', 'type'];
+
+    return listFilterService.filter({ filters, options, searchFields });
   }
 }

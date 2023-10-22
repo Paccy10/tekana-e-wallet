@@ -33,6 +33,7 @@ export class UserService {
       UserSerializer,
     );
     const searchFields = [
+      'id',
       'firstname',
       'lastname',
       'middlename',
