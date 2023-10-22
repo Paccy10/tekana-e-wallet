@@ -7,11 +7,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 
-import { Wallet } from './wallet.entity';
+import { Wallet } from '../entities';
 import { User } from 'src/user/user.entity';
-import { WALLET_EXISTS, WALLET_NOT_FOUND } from './constants';
-import { CreateWalletDTO } from './dto';
-import { WalletSerializer } from './serializers';
+import { WALLET_EXISTS, WALLET_NOT_FOUND } from '../constants/messages';
+import { CreateWalletDTO } from '../dto';
+import { WalletSerializer } from '../serializers';
 import { UserService } from 'src/user/user.service';
 import { RequestUser } from 'src/user/types';
 import { FilterDTO } from 'src/common/dto';

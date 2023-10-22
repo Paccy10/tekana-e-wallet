@@ -11,13 +11,17 @@ import {
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
 import { JwtAuthGuard } from 'src/auth/guards';
-import { WalletService } from './wallet.service';
+import { WalletService } from '../services';
 import { ResponseMessage } from 'src/common/decorators';
-import { WALLETS_FETCHED, WALLET_CREATED, WALLET_FETCHED } from './constants';
-import { CreateWalletDTO } from './dto';
+import {
+  WALLETS_FETCHED,
+  WALLET_CREATED,
+  WALLET_FETCHED,
+} from '../constants/messages';
+import { CreateWalletDTO } from '../dto';
 import { GetUser } from 'src/auth/decorators';
 import { FilterDTO } from 'src/common/dto';
-import { WalletSerializer } from './serializers';
+import { WalletSerializer } from '../serializers';
 
 @Controller('wallets')
 @ApiTags('Wallets')

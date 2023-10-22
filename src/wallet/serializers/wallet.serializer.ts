@@ -32,6 +32,7 @@ export class WalletSerializer extends BaseSerializer {
   user: WalletUserSerializer;
 
   active: boolean;
+  balance: number;
 
   @Exclude()
   pin: string;
