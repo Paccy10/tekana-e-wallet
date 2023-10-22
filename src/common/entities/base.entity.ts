@@ -7,6 +7,7 @@ import {
   DeleteDateColumn,
   BaseEntity,
   VersionColumn,
+  Index,
 } from 'typeorm';
 
 export abstract class AppBaseEntity extends BaseEntity {
@@ -15,6 +16,7 @@ export abstract class AppBaseEntity extends BaseEntity {
 
   @Column({ unique: true })
   @Generated('uuid')
+  @Index({ unique: true })
   id: string;
 
   @VersionColumn({ default: 1 })

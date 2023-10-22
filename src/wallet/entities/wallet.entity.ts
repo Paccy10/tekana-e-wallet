@@ -1,9 +1,10 @@
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
 
-import { AppBaseEntity } from 'src/common/models';
+import { AppBaseEntity } from 'src/common/entities';
 import { User } from 'src/user/user.entity';
 
 @Entity('wallets')
+@Index('wallet_userPkid_index', ['user'])
 export class Wallet extends AppBaseEntity {
   @OneToOne(() => User, (user) => user.pkid, {
     nullable: false,

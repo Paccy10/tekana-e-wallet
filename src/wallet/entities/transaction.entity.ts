@@ -1,10 +1,11 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, Index, ManyToOne } from 'typeorm';
 
-import { AppBaseEntity } from 'src/common/models';
+import { AppBaseEntity } from 'src/common/entities';
 import { Wallet } from './';
 import { TransactionStatus, TransactionType } from '../constants/enums';
 
 @Entity('transactions')
+@Index('transaction_walletPkid_index', ['wallet'])
 export class Transaction extends AppBaseEntity {
   @ManyToOne(() => Wallet, (wallet) => wallet.pkid, {
     nullable: false,

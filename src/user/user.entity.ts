@@ -1,8 +1,10 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 
-import { AppBaseEntity } from 'src/common/models';
+import { AppBaseEntity } from 'src/common/entities';
 
 @Entity('users')
+@Index('user_phone_index', ['phone'], { unique: true })
+@Index('user_email_index', ['email'], { unique: true })
 export class User extends AppBaseEntity {
   @Column('varchar', { length: 250, nullable: false })
   firstname: string;
