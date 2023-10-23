@@ -6,9 +6,9 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { Observable, map } from 'rxjs';
 
 import { Response } from '../interfaces';
-import { Observable, map } from 'rxjs';
 
 @Injectable()
 export class ResponseInterceptor<T> implements NestInterceptor<T, Response<T>> {

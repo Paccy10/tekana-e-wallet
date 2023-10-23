@@ -1,6 +1,6 @@
 import { Exclude, Type } from 'class-transformer';
 
-import { BaseSerializer } from 'src/common/serializers';
+import { BaseSerializer } from '../../common/serializers';
 
 export class WalletUserSerializer extends BaseSerializer {
   firstname: string;

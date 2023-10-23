@@ -1,7 +1,7 @@
 import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
 
-import { AppBaseEntity } from 'src/common/entities';
-import { User } from 'src/user/user.entity';
+import { AppBaseEntity } from '../../common/entities';
+import { User } from '../../user/entities';
 
 @Entity('wallets')
 @Index('wallet_userPkid_index', ['user'])

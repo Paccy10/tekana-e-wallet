@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 import { omit } from 'lodash';
 
 import { JwtPayload } from '../interfaces/jwt.interface';
-import { User } from 'src/user/user.entity';
+import { User } from '../../user/entities';
 import { UNAUTHENTICATED } from '../constants/messages';
 
 @Injectable()

@@ -10,21 +10,21 @@ import * as bcrypt from 'bcryptjs';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
 
-import { User } from 'src/user/user.entity';
-import { LoginDTO, RegisterUserDTO } from './dto';
-import { UserSerializer } from 'src/user/user.serializer';
+import { User } from '../../user/entities';
+import { LoginDTO, RegisterUserDTO } from '../dto';
+import { UserSerializer } from '../../user/serializers';
 import {
   DEACTIVATED_USER,
   EMAIL_EXISTS,
   INVALID_CREDENTIALS,
   INVALID_TOKEN,
   PHONE_EXISTS,
-} from './constants/messages';
-import { Mail } from 'src/common/interfaces';
-import { JwtPayload } from './interfaces';
-import { EmailService } from 'src/common/services';
-import { VERIFICATION_EMAIL_JOB } from 'src/common/constants';
-import { UserService } from 'src/user/user.service';
+} from '../constants/messages';
+import { Mail } from '../../common/interfaces';
+import { JwtPayload } from '../interfaces';
+import { EmailService } from '../../common/services';
+import { VERIFICATION_EMAIL_JOB } from '../../common/constants';
+import { UserService } from '../../user/services/user.service';
 
 @Injectable()
 export class AuthService {

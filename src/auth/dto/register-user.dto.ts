@@ -6,6 +6,7 @@ import {
   IsString,
   Matches,
 } from 'class-validator';
+
 import { WEAK_PASSWORD } from '../constants/messages';
 
 export class RegisterUserDTO {

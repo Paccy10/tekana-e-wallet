@@ -1,6 +1,6 @@
 import { Exclude } from 'class-transformer';
 
-import { BaseSerializer } from 'src/common/serializers';
+import { BaseSerializer } from '../../common/serializers';
 
 export class UserSerializer extends BaseSerializer {
   firstname: string;

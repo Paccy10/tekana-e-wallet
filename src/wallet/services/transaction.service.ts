@@ -10,9 +10,9 @@ import * as bcrypt from 'bcryptjs';
 
 import { Transaction, Wallet } from '../entities';
 import { CreateTransactionDTO } from '../dto/create-transaction.dto';
-import { RequestUser } from 'src/user/types';
+import { RequestUser } from '../../user/types';
 import { TransactionSerializer } from '../serializers';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../../user/services/user.service';
 import {
   FORBIDDEN_TRANSACTION,
   INCORRECT_PIN,
@@ -22,9 +22,9 @@ import {
 } from '../constants/messages';
 import { TransactionStatus, TransactionType } from '../constants/enums';
 import { CompleteTransactionDTO } from '../dto/complete-transaction.dto';
-import { FilterDTO } from 'src/common/dto';
-import { FilterService } from 'src/common/services';
-import { FilterResponse } from 'src/common/interfaces';
+import { FilterDTO } from '../../common/dto';
+import { FilterService } from '../../common/services';
+import { FilterResponse } from '../../common/interfaces';
 
 @Injectable()
 export class TransactionService {

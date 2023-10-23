@@ -2,13 +2,13 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { User } from './user.entity';
-import { NO_WALLET, USER_NOT_FOUND } from './constants/messages';
-import { FilterDTO } from 'src/common/dto';
-import { FilterResponse } from 'src/common/interfaces';
-import { UserSerializer } from './user.serializer';
-import { FilterService } from 'src/common/services';
-import { Wallet } from 'src/wallet/entities/wallet.entity';
+import { User } from '../entities';
+import { NO_WALLET, USER_NOT_FOUND } from '../constants/messages';
+import { FilterDTO } from '../../common/dto';
+import { FilterResponse } from '../../common/interfaces';
+import { UserSerializer } from '../serializers';
+import { FilterService } from '../../common/services';
+import { Wallet } from '../../wallet/entities/wallet.entity';
 
 @Injectable()
 export class UserService {

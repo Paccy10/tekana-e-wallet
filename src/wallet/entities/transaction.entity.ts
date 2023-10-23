@@ -1,6 +1,6 @@
 import { Column, Entity, Index, ManyToOne } from 'typeorm';
 
-import { AppBaseEntity } from 'src/common/entities';
+import { AppBaseEntity } from '../../common/entities';
 import { Wallet } from './';
 import { TransactionStatus, TransactionType } from '../constants/enums';
 

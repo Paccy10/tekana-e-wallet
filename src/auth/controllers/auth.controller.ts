@@ -10,14 +10,14 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { AuthService } from './auth.service';
-import { ResponseMessage } from 'src/common/decorators';
+import { AuthService } from '../services';
+import { ResponseMessage } from '../../common/decorators';
 import {
   AUTHENTICATED,
   USER_REGISTERED,
   USER_VERIFIED,
-} from './constants/messages';
-import { LoginDTO, RegisterUserDTO } from './dto';
+} from '../constants/messages';
+import { LoginDTO, RegisterUserDTO } from '../dto';
 
 @Controller('auth')
 @ApiTags('Auth')

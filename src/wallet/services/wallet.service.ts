@@ -8,15 +8,15 @@ import { FindManyOptions, Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 
 import { Wallet } from '../entities';
-import { User } from 'src/user/user.entity';
+import { User } from '../../user/entities';
 import { WALLET_EXISTS, WALLET_NOT_FOUND } from '../constants/messages';
 import { CreateWalletDTO } from '../dto';
 import { WalletSerializer } from '../serializers';
-import { UserService } from 'src/user/user.service';
-import { RequestUser } from 'src/user/types';
-import { FilterDTO } from 'src/common/dto';
-import { FilterResponse } from 'src/common/interfaces';
-import { FilterService } from 'src/common/services';
+import { UserService } from '../../user/services/user.service';
+import { RequestUser } from '../../user/types';
+import { FilterDTO } from '../../common/dto';
+import { FilterResponse } from '../../common/interfaces';
+import { FilterService } from '../../common/services';
 
 @Injectable()
 export class WalletService {

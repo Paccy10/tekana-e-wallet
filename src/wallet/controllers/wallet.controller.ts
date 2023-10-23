@@ -10,17 +10,17 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
-import { JwtAuthGuard } from 'src/auth/guards';
+import { JwtAuthGuard } from '../../auth/guards';
 import { WalletService } from '../services';
-import { ResponseMessage } from 'src/common/decorators';
+import { ResponseMessage } from '../../common/decorators';
 import {
   WALLETS_FETCHED,
   WALLET_CREATED,
   WALLET_FETCHED,
 } from '../constants/messages';
 import { CreateWalletDTO } from '../dto';
-import { GetUser } from 'src/auth/decorators';
-import { FilterDTO } from 'src/common/dto';
+import { GetUser } from '../../auth/decorators';
+import { FilterDTO } from '../../common/dto';
 import { WalletSerializer } from '../serializers';
 
 @Controller('wallets')
