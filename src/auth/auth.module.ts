@@ -3,10 +3,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 
-import { AuthService } from './auth.service';
-import { User } from 'src/user/user.entity';
-import { AuthController } from './auth.controller';
-import { UserModule } from 'src/user/user.module';
+import { AuthService } from './services';
+import { User } from '../user/entities';
+import { AuthController } from './controllers';
+import { UserModule } from '../user/user.module';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({

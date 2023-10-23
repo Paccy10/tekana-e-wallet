@@ -1,7 +1,7 @@
 import { Type, Exclude } from 'class-transformer';
 
 import { WalletUserSerializer } from './';
-import { BaseSerializer } from 'src/common/serializers';
+import { BaseSerializer } from '../../common/serializers';
 import { TransactionStatus, TransactionType } from '../constants/enums';
 
 export class TransactionWalletSerializer extends BaseSerializer {

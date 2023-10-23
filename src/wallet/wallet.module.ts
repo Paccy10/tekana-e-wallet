@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { WalletService } from './services/wallet.service';
 import { TransactionController, WalletController } from './controllers';
 import { Transaction, Wallet } from './entities';
-import { UserModule } from 'src/user/user.module';
+import { UserModule } from '../user/user.module';
 import { TransactionService } from './services';
 
 @Module({

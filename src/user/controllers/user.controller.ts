@@ -8,14 +8,14 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { JwtAuthGuard } from 'src/auth/guards';
-import { UserService } from './user.service';
-import { ResponseMessage } from 'src/common/decorators';
-import { FilterDTO } from 'src/common/dto';
-import { USERS_FETCHED, USER_FETCHED } from './constants/messages';
-import { UserSerializer } from './user.serializer';
-import { WALLET_FETCHED } from 'src/wallet/constants/messages';
-import { WalletSerializer } from 'src/wallet/serializers';
+import { JwtAuthGuard } from '../../auth/guards';
+import { UserService } from '../services/user.service';
+import { ResponseMessage } from '../../common/decorators';
+import { FilterDTO } from '../../common/dto';
+import { USERS_FETCHED, USER_FETCHED } from '../constants/messages';
+import { UserSerializer } from '../serializers';
+import { WALLET_FETCHED } from '../../wallet/constants/messages';
+import { WalletSerializer } from '../../wallet/serializers';
 
 @Controller('users')
 @ApiTags('Users')

@@ -20,11 +20,11 @@ import {
   TRANSACTION_CREATED,
   TRANSACTION_FETCHED,
 } from '../constants/messages';
-import { ResponseMessage } from 'src/common/decorators';
+import { ResponseMessage } from '../../common/decorators';
 import { CreateTransactionDTO } from '../dto/create-transaction.dto';
-import { GetUser } from 'src/auth/decorators';
+import { GetUser } from '../../auth/decorators';
 import { CompleteTransactionDTO } from '../dto/complete-transaction.dto';
-import { FilterDTO } from 'src/common/dto';
+import { FilterDTO } from '../../common/dto';
 import { TransactionSerializer } from '../serializers';
 
 @Controller('transactions')

@@ -1,6 +1,6 @@
 import { Column, Entity, Index } from 'typeorm';
 
-import { AppBaseEntity } from 'src/common/entities';
+import { AppBaseEntity } from '../../common/entities';
 
 @Entity('users')
 @Index('user_phone_index', ['phone'], { unique: true })
